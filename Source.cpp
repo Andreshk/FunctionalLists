@@ -49,7 +49,7 @@ namespace andi
 		}
 	};
 
-	// for code cleanliness
+	// for code cleanliness...
 	template<class T>
 	list<T> operator|=(const T& val, list<T> lst)
 	{
