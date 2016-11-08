@@ -134,7 +134,7 @@ namespace andi
 }
 
 template<class T>
-andi::list<T> _() {	return{}; } // lol
+andi::list<T> _() { return{}; } // lol
 
 int main()
 {
