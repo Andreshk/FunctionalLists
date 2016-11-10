@@ -75,7 +75,7 @@ namespace andi
     {
         return reverse_helper(lst, list<T>());
     }
-    
+
     template<class UnaryFunction, class T>
     list<std::result_of_t<UnaryFunction(T)>> map(UnaryFunction f, list<T> lst)
     {
@@ -127,23 +127,25 @@ namespace andi
         if (null(lst))
             return os << "()";
         os << "(" << head(lst);
-        for (auto l = tail(lst); !null(l); l = tail(l))
+        for (list<T> l = tail(lst); !null(l); l = tail(l))
             os << ", " << head(l);
         return os << ")";
     }
 }
 
+// помощна функция, връщаща празен списък от съотв. тип
 template<class T>
 andi::list<T> _() { return{}; } // lol
 
 int main()
 {
-    auto lst = 1 |= 2 |= 3 |= _<int>(); // readability++
+    using andi::list;
+    list<int> lst = 1 |= 2 |= 3 |= _<int>(); // readability++
 
     std::cout << lst << "\n" << andi::reverse(lst) << "\n";
-    auto l1 = andi::map([](int x) { return x * x; }, lst); // lambda
+    list<int> l1 = andi::map([](int x) { return x * x; }, lst); // lambda
     std::cout << l1 << "\n";
-    auto l2 = andi::filter([](int x) { return (x & 1) == 1; }, lst);
+    list<int> l2 = andi::filter([](int x) { return (x & 1) == 1; }, lst);
     std::cout << l2 << "\n";
     std::cout << append(l1, l2) << "\n";
 
@@ -155,11 +157,11 @@ int main()
 
     // списък от списъци, няма проблем - за създаването му се правят
     // само три алокации на памет (а не 9, колкото числа "съдържа" той) !
-    auto ll = lst |= lst |= lst |= _<decltype(lst)>(); // още лоши практики...
+    list<list<int>> ll = lst |= lst |= lst |= _<decltype(lst)>(); // още лоши практики...
     std::cout << ll << "\n\n";
 
     // списък с комплексни числа и операции над тях, why not
     using namespace std::complex_literals;
-    andi::list<std::complex<double>> lc = (1.2 + 3.4i) |= (0.6 - 2.8i) |= _<std::complex<double>>();
+    list<std::complex<double>> lc = (1.2 + 3.4i) |= (0.6 - 2.8i) |= _<std::complex<double>>();
     std::cout << "sum of " << lc << " = " << andi::sum(lc) << "\n";
 }
