@@ -147,7 +147,7 @@ int main()
     std::cout << l1 << "\n";
     list<int> l2 = andi::filter([](int x) { return (x & 1) == 1; }, lst);
     std::cout << l2 << "\n";
-    std::cout << append(l1, l2) << "\n";
+    std::cout << andi::append(l1, l2) << "\n";
 
     std::cout << _<float>() << "\n\n";
 
