@@ -24,9 +24,9 @@ namespace andi
         pointer_t head;
 
         list(const pointer_t& _ptr) : head(_ptr) {}
-        list(const T& val, list<T> lst) : list(std::make_shared<const node>(val, lst.head)) {};
+        list(const T& val, list<T> lst) : list(std::make_shared<const node>(val, lst.head)) {}
     public:
-        list() : head(nullptr) {};
+        list() : head(nullptr) {}
 
         friend list cons(const T& val, list<T> lst)
         {
