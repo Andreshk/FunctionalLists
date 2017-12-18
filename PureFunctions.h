@@ -16,8 +16,7 @@ namespace andi
         template<class T>
         list<T> reverse(list<T> lst)
         {
-            static const std::function<list<T>(list<T>, list<T>)>
-                helper = [](list<T> lst, list<T> res) -> list<T>
+            static const auto helper = [](list<T> lst, list<T> res) -> list<T>
             {
                 return null(lst) ? res : helper(tail(lst), cons(head(lst), res));
             };
