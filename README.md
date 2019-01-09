@@ -1,8 +1,8 @@
 # FunctionalLists
-C++14 proof-of-concept implementation of immutable functional style lists.
+C++11 proof-of-concept implementation of immutable functional style lists.
 
-Реализирани са основните функции над списъци - `length`, `reverse`, функциите от по-висок ред `map`, `filter` и `foldr`, както и `sum`, `product` и `append`.
+As a demonstration, the most common list operations such as `length`, `reverse`, the higher-oreder functions `map`, `filter` and `foldr`, as well as `sum`, `product` and `append` are implemented. C++17 is needed for simple additional syntactic features.
 
-Всяка от тези функции си има чисто-функционален вариант, отделен в `namespace andi::pure`. За използването на чистите функции е задължително да се използва `pure::` specifier-а. Те са оставени в проекта по простата причина, че са елегантни, красиви и малко mindfuck. Основните функции (`andi::...`) са реализирани процедурно с цел избягване на stack overflow, но са все така коректни.
+Each of these functions has a purely-functional variant, separated in `namespace andi::pure`, which needs the `pure::` specifier to be used. They are left in the repo simply for being elegant, straight-forward, and a little bit mind-boggling. The actual list operations have been implemented in an imperative style to avoid stack overflow, but are still valid & correct.
 
-Самият списък `andi::list<...>` съдържа само един умен указател `std::shared_ptr<...>` към главата си, който указател считаме за достатъчно малък, че да копираме списъци смело насам-натам, вместо да ги взимаме по референция. На практика се очаква `sizeof(andi::list<...>) == sizeof(std::shared_ptr<...>) == 2*sizeof(void*)` и копирането на списък да представлява копиране на два указателя + инкрементация на атомарен брояч, т.е. 3 елементарни операции. Това може да се намали до `sizeof(andi::list<...>) == sizeof(void*)` и две операции (т.е. две _инструкции_) за копиране.
+The list itself `andi::list<...>` contains only a reference-counted `std::shared_ptr<...>` pointer to its "head". This pointer is regarded as small & efficient enough, that copying lists around (instead of passing references, etc.) is considered cheap - it would actually cost copying two pointers and an atomic integer increment, dereferenced from a pointer <=> possibly a cache miss. It is expected that `sizeof(andi::list<...>) == sizeof(std::shared_ptr<...>) == 2*sizeof(void*)` and could be decreased to `sizeof(andi::list<...>) == sizeof(void*)` by using a special smart pointer (one that does not need protection from cycles & weak_ptr awareness).
